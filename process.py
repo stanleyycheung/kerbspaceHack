@@ -9,7 +9,14 @@ import pandas as pd
 api_instance = swagger_client.FeaturesControllerApi()
 ocp_apim_subscription_key = 'c105fb930d5b43b09d8da802326651e9'  # str |
 # str | viewport - a bounding box specified by two coordinates. First coordinate is bottom left second is top right. For example 51.31159579347505,-0.43013610839850003,51.73880216751415,0.25513610839837497 (optional)
-viewport = '51.511317, -0.191195, 51.576160, -0.137312'
+viewport = '51.514784, -0.133652, 51.530104, -0.117755'
+
+# bedford square
+location = '51.519781, -0.129711'
+
+
+def squareFinder(loc, radius):
+    # jj write some shit
 
 
 try:
@@ -22,10 +29,10 @@ try:
         regulations = api_response.features[i].properties['regulations']
         for j in range(0, len(regulations)):
             try:
-                classes = regulations[j]['userClasses'][0]['classes']
-                pprint(classes[0])
-                # if classes[0] == 'D':
-                #     pprint(api_response.features[i].geometry.coordinates)
+                classes = regulations[j]['userClasses'][0]['classes'][0]
+                if classes[0:2] == 'Di':
+                    pprint(classes)
+                    pprint(api_response.features[i].geometry.coordinates)
                 # else:
                 #     # pprint(classes)
                 #     pass
