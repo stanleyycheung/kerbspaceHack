@@ -4,6 +4,7 @@ import swagger_client
 from swagger_client.rest import ApiException
 from pprint import pprint
 import pandas as pd
+import math
 
 # create an instance of the API class
 api_instance = swagger_client.FeaturesControllerApi()
@@ -12,12 +13,20 @@ ocp_apim_subscription_key = 'c105fb930d5b43b09d8da802326651e9'  # str |
 viewport = '51.514784, -0.133652, 51.530104, -0.117755'
 
 # bedford square
-location = '51.519781, -0.129711'
+location = [51.519781, -0.129711]
 
 
 def squareFinder(loc, radius):
-    # jj write some shit
+    square_corners = ""
+    longitude, latitude = loc[0], loc[1]
 
+    d_vertical = radius/69
+    d_horizontal = d_vertical / math.cos(d_vertical)
+
+
+    square_corners += str(longitude - d_horizontal) + ", " + str(latitude - d_vertical) + ", " + str(longitude + d_horizontal) + ", " + str(latitude + d_vertical)
+
+    return square_corners
 
 try:
     # getFeaturesByViewport
