@@ -13,8 +13,17 @@ ocp_apim_subscription_key = 'c105fb930d5b43b09d8da802326651e9'  # str |
 viewport = '51.514784, -0.133652, 51.530104, -0.117755'
 
 # bedford square
-location = '51.519781, -0.129711'
+location = [51.519781, -0.129711]
 
+
+def squareFinder(loc, radius):
+    square_corners = ""
+    longitude, latitude = loc[0], loc[1]
+    d_vertical = (radius/1e3)/69
+    d_horizontal = d_vertical / cos(d_vertical)
+    square_corners += str(longitude - d_horizontal) + ", " + str(latitude - d_vertical) + ", " + str(longitude + d_horizontal) + ", " + str(latitude + d_vertical)
+
+    return square_corners
 
 def distanceFinder(loc1, loc2):
     # in meters
@@ -48,6 +57,7 @@ def kerbCenter(coordList):
         return coordList[n//2+1]
     else:
         return
+
 
 
 try:
