@@ -51,9 +51,27 @@ def distanceFinder(loc1, loc2):
     return distance
 
 
-def kerbSize():
-    # for jj to write
-    pass
+def kerbSize(coordList):
+    distances = []
+    kerbspaces = 0
+    for i in range(len(coordList) - 1):
+
+        loc1 = coordList[i][::-1]
+        loc2 = coordList[i+1][::-1]
+        for j in range(2):
+            loc1[j] = str(loc1[j])
+            loc2[j] = str(loc2[j])
+
+        print(loc1, loc2)
+        loc1 = ','.join(loc1)
+        loc2 = ','.join(loc2)
+        distances.append(distanceFinder(loc1, loc2))
+        print(distanceFinder(loc1, loc2))
+
+    for distance in distances:
+        kerbspaces += distance / 5
+
+    return int(kerbspaces)
 
 
 def kerbCenter(coordList):
