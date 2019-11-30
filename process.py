@@ -13,13 +13,16 @@ ocp_apim_subscription_key = 'c105fb930d5b43b09d8da802326651e9'  # str |
 viewport = '51.514784, -0.133652, 51.530104, -0.117755'
 
 # bedford square
-location = [51.519781, -0.129711]
+location = "51.519781, -0.129711"
 
 
 def squareFinder(loc, radius):
+    # arguments:
+    #   loc (string): 'lat, long'
     square_corners = ""
-    longitude, latitude = loc[0], loc[1]
-    d_vertical = (radius/1e3)/69
+    latitude, longitude = loc.split(',')
+    latitude, longitude = float(latitude), float(longitude)
+    d_vertical = sin((radius/1e3)/69)
     d_horizontal = d_vertical / cos(d_vertical)
     square_corners += str(longitude - d_horizontal) + ", " + str(latitude - d_vertical) + ", " + str(longitude + d_horizontal) + ", " + str(latitude + d_vertical)
 
@@ -44,11 +47,32 @@ def distanceFinder(loc1, loc2):
 
     return distance
 
+# square_corners = squareFinder(location, 100).split(',')
+# print(square_corners)
+# loc1, loc2 = square_corners[0] + ',' + square_corners[1], square_corners[2] + ',' + square_corners[3]
 
-def kerbSize():
-    # for jj to write
-    pass
 
+def kerbSize(coordList):
+    distances = []
+    kerbspaces = 0
+    for i in range(len(coordList) - 1):
+
+        loc1 = coordList[i][::-1]
+        loc2 = coordList[i+1][::-1]
+        for j in range(2):
+            loc1[j] = str(loc1[j])
+            loc2[j] = str(loc2[j])
+
+        print(loc1, loc2)
+        loc1 = ','.join(loc1)
+        loc2 = ','.join(loc2)
+        distances.append(distanceFinder(loc1, loc2))
+        print(distanceFinder(loc1, loc2))
+
+    for distance in distances:
+        kerbspaces += distance / 5
+
+    return int(kerbspaces)
 
 def kerbCenter(coordList):
     n = len(coordList)
